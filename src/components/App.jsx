@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import {API_URL, API_KEY } from './config';
+// import {API_URL, API_KEY } from './config';
 // import { nanoid } from 'nanoid';
 // import { Searchbar, ImageGallery, ImageGalleryItem, Button, Loader } from 'components';
 import { Searchbar } from './Searchbar/Searchbar';
