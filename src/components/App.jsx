@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
 import {API_URL, API_KEY } from './config';
-import { nanoid } from 'nanoid';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
@@ -109,10 +108,6 @@ export class App extends Component {
     
   }
 
-  // componentDidMount() {
-    
-  //   this.fetchImages();
-  // }
   render() {
   return (
     <StyledApp
