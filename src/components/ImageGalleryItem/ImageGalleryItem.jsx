@@ -14,7 +14,7 @@ export class ImageGalleryItem extends Component {
   render() {
     return (
       this.props.images.map(image => (
-                <StyledImageGalleryItem>
+                <StyledImageGalleryItem key={image.id}>
                   <li key={image.id} className="ImageGalleryItem" onClick={() => this.props.openModal(image.largeImageURL)}>
                     <img src={image.webformatURL} alt={image.tags} className="ImageGalleryItem-image"/>
                   </li>
