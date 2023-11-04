@@ -8,7 +8,7 @@ export class ImageGallery extends Component {
     return (
       <StyledImageGallery>
         <ul className="ImageGallery">
-            <ImageGalleryItem />
+            <ImageGalleryItem images={this.props.images} openModal={this.props.openModal}/>
         </ul>
      </StyledImageGallery>
     );
