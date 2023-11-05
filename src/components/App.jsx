@@ -51,9 +51,9 @@ export class App extends Component {
       this.setState({
         isLoading: false,
       });
-      if (this.state.totalHits > 0) {
-        alert(`...Images with word ${this.state.word} not found! Please, enter new word!`);
-      }
+      // if (this.state.totalHits > 0) {
+      //   alert(`...Images with word ${this.state.word} not found! Please, enter new word!`);
+      // }
     }
   };
   fetchImagesMore = async () => {
