@@ -22,8 +22,6 @@ export class App extends Component {
   onSubmit = (word) => {
     const searchWord = word;
     this.setState({word: searchWord});
-    // console.log(this.state.word);
-    
   };
 
   
@@ -45,9 +43,7 @@ export class App extends Component {
         images: data.hits,
         totalHits: data.totalHits,
       });
-      if (this.state.totalHits = "0") {
-        alert(`...Images with word ${word} not found! Please, enter new word!`);
-      }
+      
       
     } catch (error) {
       this.setState({ error: error.message });
@@ -55,6 +51,9 @@ export class App extends Component {
       this.setState({
         isLoading: false,
       });
+      if (this.state.totalHits > 0) {
+        alert(`...Images with word ${this.state.word} not found! Please, enter new word!`);
+      }
     }
   };
   fetchImagesMore = async () => {
