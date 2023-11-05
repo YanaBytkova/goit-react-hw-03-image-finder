@@ -45,6 +45,9 @@ export class App extends Component {
         images: data.hits,
         totalHits: data.totalHits,
       });
+      if (this.state.totalHits = "0") {
+        alert(`...Images with word ${word} not found! Please, enter new word!`);
+      }
       
     } catch (error) {
       this.setState({ error: error.message });
@@ -62,7 +65,10 @@ export class App extends Component {
       const word = this.state.word;
       const page = this.state.page;
       const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
-   
+      if (page === Math.floor(this.state.totalHits / 12)) {
+        alert(`...You viewed all images with ${word}! Please, enter new word!`);
+      }
+      
       if (this.state.images !== null) {
         const addImages = 
           data.hits;
@@ -115,7 +121,7 @@ export class App extends Component {
       <Searchbar onSubmit={this.onSubmit}/>
       {this.state.isLoading && <Loader />}
       {this.state.images !== null && <ImageGallery images={this.state.images} openModal={this.openModal} />}
-      {this.state.totalHits !== null && <Button loadMoreHandler={this.loadMoreHandler} />}
+      {((this.state.totalHits > 12) && (this.state.page !== Math.floor(this.state.totalHits / 12))) && <Button loadMoreHandler={this.loadMoreHandler} />}
       {this.state.isOpenModal && (
           <Modal
             closeModal={this.closeModal}

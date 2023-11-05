@@ -9,16 +9,17 @@ export class Searchbar extends Component {
     };
     handleSubmit = event => {
         event.preventDefault();
+        const form = event.currentTarget;
         const word = this.state.word;
         this.props.onSubmit(word);
- 
+        form.reset();
       };
       handleInputChange = event => {
         const value = event.target.value;
         this.setState({
           word: value,
         });
-        // console.log("word", this.state.word);
+       
       };
   render() {
     return (
