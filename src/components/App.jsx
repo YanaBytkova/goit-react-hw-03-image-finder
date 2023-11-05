@@ -21,7 +21,9 @@ export class App extends Component {
   
   onSubmit = (word) => {
     const searchWord = word;
-    this.setState({word: searchWord});
+    this.setState(
+      {word: searchWord,
+        page: 1});
   };
 
   
