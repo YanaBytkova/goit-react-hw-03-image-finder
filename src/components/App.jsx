@@ -23,6 +23,7 @@ export class App extends Component {
     const searchWord = word;
     this.setState(
       {word: searchWord,
+        images: [],
         page: 1});
   };
 
@@ -89,6 +90,9 @@ export class App extends Component {
   };
   componentDidUpdate(_, prevState) {
     if (prevState.word !== this.state.word) {
+      this.setState({
+        images: null,
+      });
       this.fetchImages();
     }
     if (prevState.page !== this.state.page) {
