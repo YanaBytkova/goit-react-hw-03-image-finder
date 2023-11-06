@@ -23,7 +23,7 @@ export class App extends Component {
     const searchWord = word;
     this.setState(
       {word: searchWord,
-        images: [],
+        images: null,
         page: 1});
   };
 
@@ -42,11 +42,26 @@ export class App extends Component {
       const word = this.state.word;
       const page = this.state.page;
       const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
-      this.setState({
-        images: data.hits,
-        totalHits: data.totalHits,
-      });
+      if (this.state.images == null) {
+        this.setState({
+          images: data.hits,
+          totalHits: data.totalHits,
+        });
+        
+      }
       
+      if (page === Math.floor(this.state.totalHits / 12)) {
+              alert(`...You viewed all images with ${word}! Please, enter new word!`);
+            }
+            
+            if (this.state.images !== null) {
+              const addImages = 
+                data.hits;
+                console.log(this.state.images.length, addImages);
+              this.setState(prevState => ({
+                images: prevState.images.concat(addImages),
+                totalHits: data.totalHits,
+                    }));}
       
     } catch (error) {
       this.setState({ error: error.message });
@@ -57,37 +72,44 @@ export class App extends Component {
       // if (this.state.totalHits > 0) {
       //   alert(`...Images with word ${this.state.word} not found! Please, enter new word!`);
       // }
-    }
+    
   };
-  fetchImagesMore = async () => {
-    try {
-      this.setState({
-        isLoading: true,
-      });
-      const word = this.state.word;
-      const page = this.state.page;
-      const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
-      if (page === Math.floor(this.state.totalHits / 12)) {
-        alert(`...You viewed all images with ${word}! Please, enter new word!`);
-      }
+}
+  // fetchImagesMore = async () => {
+  //   try {
+  //     this.setState({
+  //       isLoading: true,
+  //     });
+  //     const word = this.state.word;
+  //     const page = this.state.page;
+  //     const { data } = await axios.get(`${API_URL}?q=${word}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
+  //     if (page === Math.floor(this.state.totalHits / 12)) {
+  //       alert(`...You viewed all images with ${word}! Please, enter new word!`);
+  //     }
       
-      if (this.state.images !== null) {
-        const addImages = 
-          data.hits;
-        this.setState(prevState => ({
-          images: prevState.images.concat(addImages),
-        }));
+  //     if (this.state.images !== null) {
+  //       const addImages = 
+  //         data.hits;
+  //       this.setState(prevState => ({
+  //         images: prevState.images.concat(addImages),
+  //       }));
         
-      }
+  //     }
       
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({
-        isLoading: false,
-      });
-    }
-  };
+  //   } catch (error) {
+  //     this.setState({ error: error.message });
+  //   } finally {
+  //     this.setState({
+  //       isLoading: false,
+  //     });
+  //   }
+  // };
+
+  // componentDidUpdate(prevProps, prevState){
+  //   if(this.state.page !== prevState.page || this.state.query!== prevState.query ){
+  //   fetch()
+  //   }
+  // }
   componentDidUpdate(_, prevState) {
     if (prevState.word !== this.state.word) {
       this.setState({
@@ -95,10 +117,11 @@ export class App extends Component {
       });
       this.fetchImages();
     }
-    if (prevState.page !== this.state.page) {
-      this.fetchImagesMore();
+    if (this.state.page !== prevState.page || this.state.query!== prevState.query) {
+      this.fetchImages();
     }
-  }
+  };
+
   openModal = imageUrl => {
     this.setState({
       isOpenModal: true,
